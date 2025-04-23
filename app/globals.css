@@ -134,8 +134,8 @@
   border-radius: 0.5rem;
   padding: 1.5rem;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  width: 90vw; /* mobile-first width */
-  max-width: 95vw; /* prevent overflow on very small screens */
+  width: 90vw;
+  max-width: 95vw;
   opacity: 1 !important;
   visibility: visible !important;
 }
@@ -172,9 +172,42 @@
   }
 }
 
-.dark [data-slot="dialog-content"] {
+/* .dark [data-slot="dialog-content"] {
   background-color: var(--color-card);
   color: var(--color-card-foreground);
+} */
+
+/* Tab triggers styling */
+.tab-trigger {
+  font-family: var(--font-cursive);
+  font-size: 1.875rem; /* text-3xl */
+  line-height: 2.25rem;
+  color: #6b7280; /* gray-500 */
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+/* Active tab styling */
+.tab-trigger[data-state="active"] {
+  color: #98ab3f;
+  text-decoration: underline;
+}
+
+/* .tab-trigger[data-state="active"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #98ab3f;
+  transform: scaleX(1);
+} */
+
+/* Hover effect */
+.tab-trigger:hover {
+  color: #98ab3f;
 }
 
 @layer base {
