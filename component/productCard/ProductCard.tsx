@@ -55,8 +55,8 @@ const ProductCard = ({
               ${product.price}
             </p>
             <div className="flex items-center justify-center gap-5">
-              <div className="border border-basicColor p-2 rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition duration-300">
-                <CiHeart className="text-basicColor" />
+              <div className="border border-basicColor p-2 rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition duration-300  text-basicColor hover:bg-basicColor hover:text-white">
+                <CiHeart />
               </div>
               <Button
                 variant="outline"
@@ -64,8 +64,8 @@ const ProductCard = ({
               >
                 Add to cart
               </Button>
-              <div className="border border-basicColor p-2 rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition duration-300">
-                <IoIosSearch className="text-basicColor" />
+              <div className="border border-basicColor p-2 rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition duration-300  text-basicColor hover:bg-basicColor hover:text-white">
+                <IoIosSearch />
               </div>
             </div>
           </div>

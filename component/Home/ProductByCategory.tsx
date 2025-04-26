@@ -33,7 +33,10 @@ const products = [
 
 const ProductByCategory = () => {
   return (
-    <div className="max-w-screen-xl mx-auto py-16 border-t-2">
+    <div
+      data-aos="fade-up"
+      className="max-w-screen-xl mx-auto py-16 border-t-2"
+    >
       <Tabs defaultValue="beauty" className="w-full">
         <TabsList className="flex gap-8 bg-transparent">
           <TabsTrigger value="beauty" className="tab-trigger">

@@ -41,7 +41,9 @@ const ProductSection = () => {
       >
         DEAL OF THE DAYS
       </h2>
-      <ProductCardWithModal products={products} />
+      <div data-aos="fade-up">
+        <ProductCardWithModal products={products} />
+      </div>
     </div>
   );
 };
