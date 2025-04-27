@@ -2,7 +2,8 @@ import Breadcrumb from "@/component/shared/Breadcrumb";
 import MainLayout from "@/layout/MainLayout";
 import Image from "next/image";
 
-const BlogDetails = ({ params }: { params: { slug: string } }) => {
+const BlogDetails = ({ params }: { params: any }) => {
+  console.log(params);
   return (
     <MainLayout>
       <Breadcrumb />
