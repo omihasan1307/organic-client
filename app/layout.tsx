@@ -6,6 +6,7 @@ import { AosInit } from "@/lib/aos";
 import "./globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 
 // Primary font - Roboto
 const roboto = Roboto({

@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
-import ReactImageMagnify from "react-image-magnify";
+import React, { useState } from "react";
+import InnerImageZoom from "react-inner-image-zoom";
+import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 import Slider from "react-slick";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// Product Images JSON
 const productImages = [
   {
     id: 1,
@@ -22,17 +22,19 @@ const productImages = [
   },
   {
     id: 3,
-    mainImage: "/product-img3.jpg",
-    smallImage: "/product-img3.jpg",
+    mainImage: "/about.png",
+    smallImage: "/about.png",
   },
   {
     id: 4,
-    mainImage: "/product-img1.jpg",
-    smallImage: "/product-img1.jpg",
+    mainImage: "/man.jpg",
+    smallImage: "/man.jpg",
   },
 ];
 
 const ProductImage = () => {
+  const [selectedImage, setSelectedImage] = useState(productImages[0]);
+
   const NextArrow = ({ onClick }: any) => (
     <div
       onClick={onClick}
@@ -61,72 +63,24 @@ const ProductImage = () => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
+      { breakpoint: 768, settings: { slidesToShow: 3 } },
+      { breakpoint: 480, settings: { slidesToShow: 2 } },
     ],
   };
-
-  const [isMobile, setIsMobile] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(productImages[0]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize(); // run on mount
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
     <div className="w-full max-w-md mx-auto flex flex-col gap-4">
       {/* Main Image */}
-      <div className="w-full relative border rounded-md">
-        {isMobile ? (
-          <Image
-            src={selectedImage.mainImage}
-            alt="Product"
-            width={400}
-            height={400}
-            className="w-full h-auto object-cover"
-          />
-        ) : (
-          <div className="w-full">
-            <ReactImageMagnify
-              {...{
-                smallImage: {
-                  alt: "Product",
-                  isFluidWidth: true,
-                  src: selectedImage.smallImage || selectedImage.mainImage,
-                  sizes: "(max-width: 768px) 100vw, 400px", // important for correct rendering
-                },
-                largeImage: {
-                  src: selectedImage.mainImage,
-                  width: 1200,
-                  height: 1800,
-                },
-                enlargedImageContainerDimensions: {
-                  width: "150%",
-                  height: "100%",
-                },
-                enlargedImagePosition: "beside",
-                isHintEnabled: true,
-                shouldUsePositiveSpaceLens: true,
-              }}
-            />
-          </div>
-        )}
+
+      <div className="w-full relative border rounded-md overflow-hidden">
+        <InnerImageZoom
+          src={selectedImage.mainImage}
+          zoomSrc={selectedImage.mainImage}
+          zoomType="hover"
+          zoomPreload={true}
+          hasSpacer={true}
+          className="rounded w-full h-full object-cover"
+        />
       </div>
 
       {/* Thumbnails */}
