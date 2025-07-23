@@ -3,10 +3,13 @@ import { Roboto } from "next/font/google";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Lobster_Two } from "next/font/google";
 import { AosInit } from "@/lib/aos";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
+import TanStackProvider from "./providers/TanstackProvider";
+import { ToastContainer } from "react-toastify";
 
 // Primary font - Roboto
 const roboto = Roboto({
@@ -50,8 +53,11 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${geistSans.variable} ${geistMono.variable} ${lobsterTwo.variable} antialiased`}
       >
-        {children}
-        <AosInit />
+        <TanStackProvider>
+          {children}
+          <AosInit />
+          <ToastContainer />
+        </TanStackProvider>
       </body>
     </html>
   );

@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useContact } from "../hooks/post/post.hook";
 
 type FormData = {
   name: string;
   email: string;
-  subject: string;
+  phone_number: string;
   message: string;
 };
 
@@ -15,17 +16,25 @@ const ContactForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
+  const { mutate: handleContact, isPending } = useContact();
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
-    // Add your form submission logic here
+    handleContact(data, {
+      onSuccess: () => {
+        reset();
+      },
+    });
   };
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit(onSubmit)(e);
+      }}
       className="space-y-4 w-full max-w-2xl mx-auto"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -60,11 +69,16 @@ const ContactForm = () => {
 
       <div>
         <Input
-          placeholder="Subject"
-          {...register("subject", { required: "Subject is required" })}
+          placeholder="phone_number"
+          type="tel"
+          {...register("phone_number", {
+            required: "phone_number is required",
+          })}
         />
-        {errors.subject && (
-          <p className="text-red-500 text-sm mt-1">{errors.subject.message}</p>
+        {errors.phone_number && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.phone_number.message}
+          </p>
         )}
       </div>
 
