@@ -4,7 +4,6 @@
 import axiosInstance from "@/app/shared/config/axios.config";
 import { ENV_CONFIG, FETCH_OPTIONS } from "@/app/shared/constant/app.constant";
 
-
 export const getProjectList = async () => {
   try {
     const response = await axiosInstance.get(`/projects/project/`);
@@ -43,10 +42,15 @@ export const getSingleService = async (id: number) => {
 
 export const getWebsite = async () => {
   try {
-    const response = await fetch(`${ENV_CONFIG.baseApi}/base/website-data`, FETCH_OPTIONS);
+    const response = await fetch(
+      `${ENV_CONFIG.baseApi}/base/website-data`,
+      FETCH_OPTIONS
+    );
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch website data. HTTP status: ${response.status}`);
+      throw new Error(
+        `Failed to fetch website data. HTTP status: ${response.status}`
+      );
     }
     const data = await response.json();
     return data;
@@ -78,13 +82,11 @@ export const getSingleBlog = async (id: number) => {
   }
 };
 
-
 export const getAllOrders = async () => {
   try {
-    const response = await axiosInstance.get("/api/admin/orders");
+    const response = await axiosInstance.get(`/order`);
     return response?.data;
   } catch (error: any) {
     throw new Error(error?.message || "Failed to fetch Project item");
   }
 };
-
