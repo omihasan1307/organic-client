@@ -7,12 +7,12 @@ import Link from "next/link";
 
 const ProductCardWithoutDialog = ({ product }: { product: any }) => {
   return (
-    <Link href={"/shop/123"}>
+    <Link href={`/shop/${product.id}`}>
       <div className="group relative  p-4 rounded-md cursor-pointer">
         <div className="relative">
           <Image
-            src={product.image}
-            alt={product.name}
+            src={product.thumbnailUrl}
+            alt={product.title}
             width={500}
             height={500}
             className="w-full h-auto"
@@ -20,7 +20,7 @@ const ProductCardWithoutDialog = ({ product }: { product: any }) => {
         </div>
 
         <div className="text-center py-4 space-y-5">
-          <h1 className="uppercase text-gray-700 text-xl">{product.name}</h1>
+          <h1 className="uppercase text-gray-700 text-xl">{product.title}</h1>
           <div className="space-y-2">
             <p className="font-cursive text-lg font-semibold text-baseColor">
               ${product.price}

@@ -5,6 +5,7 @@ import SideBarSection from "./SideBar";
 import Image from "next/image";
 import Grid from "@/utils/Grid";
 import ProductSection from "./ProductSection";
+import { getProductList } from "../actions/get/get.action";
 
 export const metadata: Metadata = {
   title: "Shop | Organica",
@@ -67,7 +68,10 @@ const products = [
   },
 ];
 
-const ShopPage = () => {
+const ShopPage = async () => {
+  const productData = await getProductList();
+
+
   return (
     <MainLayout>
       <Breadcrumb />
@@ -83,7 +87,7 @@ const ShopPage = () => {
             height={500}
             className="w-full "
           />
-          <ProductSection products={products} />
+          <ProductSection products={productData?.data?.data} />
         </div>
       </div>
     </MainLayout>

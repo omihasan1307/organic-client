@@ -15,7 +15,7 @@ const productInfo = {
   tags: ["Organic", "Fresh", "Best Seller"],
 };
 
-const ProductBasicInfo = () => {
+const ProductBasicInfo = ({ product }: { product: any }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
@@ -24,11 +24,10 @@ const ProductBasicInfo = () => {
     <div className="space-y-6">
       {/* Product Name and Price */}
       <div className="space-y-2 text-left">
-        <p className="text-2xl font-semibold text-baseColor">
-          {productInfo.name}
-        </p>
+        <p className="text-2xl font-semibold text-baseColor">{product.title}</p>
+        <p className="font-sans ">{product.subtitle}</p>
         <p className="font-cursive text-lg font-semibold text-basicColor">
-          ${productInfo.price}
+          ${product.price}
         </p>
       </div>
 
@@ -39,7 +38,7 @@ const ProductBasicInfo = () => {
         </p>
         <p>
           <span className="font-semibold">Availability:</span>{" "}
-          {productInfo.availability}
+          {product.stock ? `In Stock (${product.stock})` : "Out of Stock"}
         </p>
       </div>
 
@@ -121,7 +120,7 @@ const ProductBasicInfo = () => {
       {/* Tags */}
       {productInfo.tags.length > 0 && (
         <div>
-          <Tags />
+          <Tags tag={product?.tags} />
         </div>
       )}
     </div>

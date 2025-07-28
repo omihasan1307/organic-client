@@ -82,6 +82,28 @@ export const getSingleBlog = async (id: number) => {
   }
 };
 
+export const getProductList = async () => {
+  try {
+    const response = await axiosInstance.get(`/product`);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error?.message || "Failed to fetch Product item");
+  }
+};
+
+export const getSingleProduct = async (id: any) => {
+  try {
+    const response = await axiosInstance.get(`/product/${id}/`);
+    if (response?.data) {
+      return response.data;
+    } else {
+      throw new Error("Failed to fetch Single Product item");
+    }
+  } catch (error: any) {
+    throw new Error(error?.message || "Failed to fetch Product item");
+  }
+};
+
 export const getAllOrders = async () => {
   try {
     const response = await axiosInstance.get(`/order`);

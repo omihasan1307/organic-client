@@ -4,9 +4,7 @@ import Review from "./Review";
 import Tags from "./Tags";
 import AdditionalInfo from "./AdditionalInfo";
 
-
-
-const ProductDetailsWithTab = () => {
+const ProductDetailsWithTab = ({ product }: { product: any }) => {
   return (
     <div>
       <div
@@ -33,7 +31,7 @@ const ProductDetailsWithTab = () => {
             value="description"
             className="border my-5 p-5 text-gray-600"
           >
-            <ProductDescription />
+            <ProductDescription description={product?.description} />
           </TabsContent>
           <TabsContent
             value="reviews"
@@ -42,7 +40,7 @@ const ProductDetailsWithTab = () => {
             <Review />
           </TabsContent>
           <TabsContent value="Tags" className="border my-5 p-5 text-gray-600">
-            <Tags />
+            <Tags tag={product?.tags} />
           </TabsContent>
           <TabsContent
             value="additional_info"

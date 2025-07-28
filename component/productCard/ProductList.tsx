@@ -8,26 +8,24 @@ const ProductList = ({ products }: { products: any }) => {
   return (
     <div>
       {products.map((product: any, index: number) => (
-        <div key={product.id}>
+        <div key={product?.slug}>
           <div className="lg:flex items-center text-center lg:text-left gap-4">
             <Image
-              src={product.image}
-              alt={product.name}
+              src={product.thumbnailUrl}
+              alt={product.title}
               width={200}
               height={200}
               className="rounded-md mx-auto md:mx-0"
             />
             <div className="space-y-5">
               <p className=" text-2xl font-semibold text-baseColor mb-3">
-                {product.name}
+                {product.title}
               </p>
               <p className="font-cursive text-lg font-semibold text-basicColor mb-3">
                 ${product.price}
               </p>
 
-              <p className="text-gray-700 text-sm mt-2">
-                {product.description}
-              </p>
+              <p className="text-gray-700 text-sm mt-2">{product.subtitle}</p>
               <div className="flex items-center lg:justify-start justify-center gap-5 ">
                 <Button className="bg-basicColor hover:bg-basicColor/90">
                   Add to Cart

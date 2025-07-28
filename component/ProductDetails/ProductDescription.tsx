@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-const ProductDescription = () => {
-    return (
-        <div>
-             <p> products description coming soon.</p>
-        </div>
-    );
+const ProductDescription = ({ description }: any) => {
+  return (
+    <div>
+      <p>{description}</p>
+    </div>
+  );
 };
 
 export default ProductDescription;
