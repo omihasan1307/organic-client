@@ -77,3 +77,14 @@ export const getSingleBlog = async (id: number) => {
     throw new Error(error?.message || "Failed to fetch Project item");
   }
 };
+
+
+export const getAllOrders = async () => {
+  try {
+    const response = await axiosInstance.get("/api/admin/orders");
+    return response?.data;
+  } catch (error: any) {
+    throw new Error(error?.message || "Failed to fetch Project item");
+  }
+};
+

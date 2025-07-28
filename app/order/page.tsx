@@ -1,6 +1,6 @@
 import React from "react";
 import OrderList from "./OrderList";
-import { getAllOrders } from "./order";
+import { getAllOrders } from "../actions/get/get.action";
 
 const OrderPage = async () => {
   const orders = await getAllOrders();
