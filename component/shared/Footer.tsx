@@ -72,7 +72,7 @@ const FooterSection = () => {
           </div>
         </div>
       </div>
-      <p className="text-center py-2 text-gray-400 ">
+      <p className="text-center py-2 text-gray-400 " suppressHydrationWarning>
         © {new Date().getFullYear()} amihasan130@gmail.com.
       </p>
     </footer>
