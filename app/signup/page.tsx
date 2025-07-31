@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import {
   Mail,
   Lock,
@@ -14,24 +14,34 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useState } from "react";
+import { useSignUp } from "../hooks/post/post.hook";
+import { useRouter } from "next/navigation";
 
 type FormData = {
-  name: string;
+  username: string;
   email: string;
   password: string;
 };
 
 const SignUpPage = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const { mutate: handleContact, isPending } = useSignUp();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
-    // Add your signup logic here
+    handleContact(data, {
+      onSuccess: () => {
+        reset();
+        router.push("/login");
+      },
+    });
   };
 
   return (
@@ -55,14 +65,16 @@ const SignUpPage = () => {
                 id="name"
                 placeholder="Full Name"
                 className="pl-10 py-5 border-gray-300 focus:ring-2 focus:ring-basicColor focus:border-transparent"
-                {...register("name", {
+                {...register("username", {
                   required: "Name is required",
                 })}
               />
               <User className="absolute left-3 top-3 -translate-y-1/2 text-gray-400 w-4 h-4" />
             </div>
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            {errors.username && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.username.message}
+              </p>
             )}
           </div>
 

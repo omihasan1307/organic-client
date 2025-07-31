@@ -10,6 +10,8 @@ import "slick-carousel/slick/slick-theme.css";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 import TanStackProvider from "./providers/TanstackProvider";
 import { ToastContainer } from "react-toastify";
+import { AuthProvider } from "./providers/auth-context";
+import AuthInitializer from "@/component/AuthInitializer";
 
 // Primary font - Roboto
 const roboto = Roboto({
@@ -53,11 +55,15 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${geistSans.variable} ${geistMono.variable} ${lobsterTwo.variable} antialiased`}
       >
-        <TanStackProvider>
-          {children}
-          <AosInit />
-          <ToastContainer />
-        </TanStackProvider>
+        <AuthProvider>
+          <AuthInitializer>
+            <TanStackProvider>
+              {children}
+              <AosInit />
+              <ToastContainer />
+            </TanStackProvider>
+          </AuthInitializer>
+        </AuthProvider>
       </body>
     </html>
   );

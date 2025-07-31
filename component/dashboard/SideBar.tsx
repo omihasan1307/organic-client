@@ -1,3 +1,4 @@
+// components/dashboard/SideBar.tsx
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -9,60 +10,74 @@ import {
   FiLogOut,
   FiMenu,
   FiX,
+  FiUser,
+  FiSettings,
+  FiShoppingCart,
 } from "react-icons/fi";
 import { useState, useEffect } from "react";
+import { useAuth } from "@/app/providers/auth-context";
 
-// Define menu items for user role
-const userMenuItems = [
-  {
-    label: "Course List",
-    href: "/profile/wishlist",
-    icon: <FiBook className="w-5 h-5" />,
-  },
-  {
-    label: "Log Out",
-    href: "/",
-    action: "logout",
-    icon: <FiLogOut className="w-5 h-5" />,
-  },
-];
-
-// Define menu items for admin role
-const adminMenuItems = [
-  {
-    label: "Home",
-    href: "/profile/admin",
-    icon: <FiHome className="w-5 h-5" />,
-  },
-  {
-    label: "Manage Blog",
-    href: "/profile/admin/blog",
-    icon: <FiFileText className="w-5 h-5" />,
-  },
-  {
-    label: "Manage Module",
-    href: "/profile/admin/module",
-    icon: <FiBook className="w-5 h-5" />,
-  },
-  {
-    label: "Manage Lecture",
-    href: "/profile/admin/lectures",
-    icon: <FiVideo className="w-5 h-5" />,
-  },
-  {
-    label: "Log Out",
-    href: "/",
-    action: "logout",
-    icon: <FiLogOut className="w-5 h-5" />,
-  },
-];
-
-const DashboardSideBar = ({ data, logOutUser }: any) => {
+const DashboardSideBar = () => {
+  const { role, logout, user } = useAuth();
   const pathname = usePathname();
-  const role = data?.role || "user";
-  const menuItems = role !== "admin" ? adminMenuItems : userMenuItems;
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  console.log(role);
+
+  // Menu items configuration
+  const menuItems = [
+    // Common items for all roles
+    {
+      label: "Profile",
+      href: role === "admin" ? "/profile/admin" : "/profile",
+      icon: <FiUser className="w-5 h-5" />,
+    },
+    ...(role === "admin"
+      ? [
+          // Admin specific items
+          {
+            label: "Manage Blog",
+            href: "/profile/admin/blog",
+            icon: <FiFileText className="w-5 h-5" />,
+          },
+          {
+            label: "Manage Module",
+            href: "/profile/admin/module",
+            icon: <FiBook className="w-5 h-5" />,
+          },
+          {
+            label: "Manage Lecture",
+            href: "/profile/admin/lectures",
+            icon: <FiVideo className="w-5 h-5" />,
+          },
+        ]
+      : [
+          // User specific items
+          {
+            label: "My Courses",
+            href: "/profile/courses",
+            icon: <FiBook className="w-5 h-5" />,
+          },
+          {
+            label: "Wishlist",
+            href: "/profile/wishlist",
+            icon: <FiShoppingCart className="w-5 h-5" />,
+          },
+          {
+            label: "Settings",
+            href: "/profile/settings",
+            icon: <FiSettings className="w-5 h-5" />,
+          },
+        ]),
+    // Common logout item
+    {
+      label: "Log Out",
+      href: "#",
+      action: "logout",
+      icon: <FiLogOut className="w-5 h-5" />,
+    },
+  ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -75,8 +90,7 @@ const DashboardSideBar = ({ data, logOutUser }: any) => {
 
   const handleMenuClick = (item: any) => {
     if (item.action === "logout") {
-      localStorage.removeItem("accessToken");
-      logOutUser();
+      logout();
     }
     if (isMobile) {
       setIsMobileOpen(false);
@@ -90,6 +104,7 @@ const DashboardSideBar = ({ data, logOutUser }: any) => {
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
           className="fixed z-40 top-4 left-4 p-2 rounded-md bg-white shadow-md md:hidden"
+          aria-label="Toggle menu"
         >
           {isMobileOpen ? (
             <FiX className="w-6 h-6" />
@@ -110,12 +125,16 @@ const DashboardSideBar = ({ data, logOutUser }: any) => {
         {/* Profile Section */}
         <div className="flex flex-col items-center text-center mb-6 p-4 bg-gray-50 rounded-lg">
           <img
-            src="https://via.placeholder.com/110"
+            src={user?.avatar || "https://via.placeholder.com/110"}
             alt="User Avatar"
             className="w-16 h-16 rounded-full mb-3 border-2 border-blue-100"
           />
-          <h2 className="text-lg font-semibold text-gray-800">Customer Name</h2>
-          <p className="text-sm text-gray-500">Customer Address</p>
+          <h2 className="text-lg font-semibold text-gray-800">
+            {user?.name || "User"}
+          </h2>
+          <p className="text-sm text-gray-500 capitalize">
+            {role || "user"} account
+          </p>
         </div>
 
         {/* Navigation Menu */}

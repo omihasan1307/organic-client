@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail, Lock, ArrowRight, Eye, EyeOff, ChevronLeft } from "lucide-react";
 import { useState } from "react";
+import { useLogin } from "../hooks/post/post.hook";
+import { useAuth } from "../providers/auth-context";
+import { useRouter } from "next/navigation";
 
 type FormData = {
   email: string;
@@ -14,17 +17,26 @@ type FormData = {
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { mutate: handleContact, isPending } = useLogin();
+  const { login } = useAuth();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
-    // Add your login logic here
+    handleContact(data, {
+      onSuccess: (response) => {
+        login(response.data.access_token);
+        reset();
+        router.push("/profile");
+      },
+    });
   };
-
   return (
     <div className="min-h-screen  flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">

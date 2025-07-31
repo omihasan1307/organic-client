@@ -1,8 +1,13 @@
+import RoleRoute from "@/component/role-route";
 import DashboardLayout from "@/layout/DashboardLayout";
 import React from "react";
 
 const AdminDashboard = () => {
-  return <DashboardLayout>Admin</DashboardLayout>;
+  return (
+    <RoleRoute allowedRoles={["admin"]}>
+      <DashboardLayout>Admin</DashboardLayout>;
+    </RoleRoute>
+  );
 };
 
 export default AdminDashboard;

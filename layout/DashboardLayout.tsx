@@ -1,6 +1,9 @@
+// app/profile/layout.tsx
+"use client";
 import DashboardSideBar from "@/component/dashboard/SideBar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { AuthProvider } from "@/app/providers/auth-context";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -18,12 +21,21 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <AuthProvider>
+      <DashboardContent>{children}</DashboardContent>
+    </AuthProvider>
+  );
+}
+
+// Separate client component to use hooks
+function DashboardContent({ children }: { children: React.ReactNode }) {
+  return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row gap-6">
           {/* Sidebar - Hidden on mobile unless toggled */}
           <div className="w-full md:w-1/4 lg:w-1/5">
-            <DashboardSideBar data={"user"} logOutUser={"logout"} />
+            <DashboardSideBar />
           </div>
 
           {/* Main content */}
