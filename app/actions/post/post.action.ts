@@ -22,6 +22,16 @@ export const contactToDb = async (data: any) => {
   }
 };
 
+export const blogToDb = async (data: any) => {
+  try {
+    const res = await axiosInstance.post("/blog", data);
+    return res?.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(`Blog  Error : ${error?.message}`);
+  }
+};
+
 export const signUpToDb = async (data: any) => {
   try {
     const res = await axiosInstance.post("/auth/signup", data);

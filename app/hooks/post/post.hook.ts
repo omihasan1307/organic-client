@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  blogToDb,
   contactToDb,
   inquiryToDb,
   loginToDb,
@@ -31,6 +32,20 @@ export const useContact = () => {
     onError: (data: any) => {
       console.log("error res", data);
       toast.error(data?.message || "Contact added Failed");
+    },
+  });
+};
+
+export const useBlog = () => {
+  return useMutation({
+    mutationKey: ["BLOG"],
+    mutationFn: async (data: any) => await blogToDb(data),
+    onSuccess: (data) => {
+      toast.success(` ${data?.message} `);
+    },
+    onError: (data: any) => {
+      console.log("error res", data);
+      toast.error(data?.message || "blog added Failed");
     },
   });
 };

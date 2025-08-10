@@ -31,12 +31,20 @@ const LoginPage = () => {
   const onSubmit = (data: FormData) => {
     handleContact(data, {
       onSuccess: (response) => {
-        login(response.data.access_token);
+        const { access_token, user } = response.data;
+        login(access_token);
+
         reset();
-        router.push("/profile");
+
+        if (user?.role === "admin") {
+          router.push("/profile/admin");
+        } else {
+          router.push("/profile");
+        }
       },
     });
   };
+
   return (
     <div className="min-h-screen  flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">

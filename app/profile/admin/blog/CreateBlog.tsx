@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { useBlog } from "@/app/hooks/post/post.hook";
 
 type BlogFormData = {
   title: string;
@@ -21,16 +22,19 @@ const CreateBlog = () => {
     formState: { errors, isSubmitting },
   } = useForm<BlogFormData>();
 
+  const { mutate: handleBlog, isPending } = useBlog();
+
   const onSubmit = async (data: BlogFormData) => {
-    console.log(data);
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("image", data.image[0]);
+    formData.append("description", data.description);
 
-    // Example: how you can access the image file
-    const imageFile = data.image[0];
-    console.log("Uploaded image:", imageFile);
-
-    // TODO: Handle form submission (like uploading to server)
-
-    reset(); // Reset form after submit
+    handleBlog(formData, {
+      onSuccess: () => {
+        reset();
+      },
+    });
   };
 
   return (
@@ -77,7 +81,12 @@ const CreateBlog = () => {
       </div>
 
       {/* Submit button */}
-      <Button variant={"default"} type="submit" disabled={isSubmitting}>
+      <Button
+        variant={"default"}
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full bg-gradient-to-r from-basicColor to-baseColor hover:from-basicColor/90 hover:to-basicColor py-6 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
+      >
         {isSubmitting ? "Submitting..." : "Create Blog"}
       </Button>
     </form>
